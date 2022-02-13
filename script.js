@@ -9,16 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let draggedItem = null;
 
-  function beginDrag(item) {
-    draggedItem = item;
-    item.classList.add("dragged");
-  }
-
-  function endDrag(item) {
-    draggedItem = null;
-    item.classList.remove("dragged");
-  }
-
   function createItem(editNow = false) {
     const item = document.createElement("div");
     item.classList.add("item");
@@ -48,8 +38,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     };
 
-    item.addEventListener("dragstart", () => beginDrag(item));
-    item.addEventListener("dragend", () => endDrag(item));
+    item.addEventListener("dragstart", () => { draggedItem = item; item.classList.add("dragged"); });
+    item.addEventListener("dragend", () => item.classList.remove("dragged"));
 
     return item;
   }

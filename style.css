@@ -42,9 +42,9 @@ body > * {
 
 .item {
     display: flex;
-};
+}
 
-f.item > span, .item > input, #newItemButton {
+.item > span, .item > input, #newItemButton {
     font-size: 1.4rem;
     text-align: center;
 }
