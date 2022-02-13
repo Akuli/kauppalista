@@ -1,4 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // https://stackoverflow.com/a/37901056
+  firebase.auth().onAuthStateChanged(user => {
+    if (!user) {
+      window.location.href = window.location.origin + "/login.html";
+    }
+  });
+
+  document.getElementById("signOutButton").onclick = () => firebase.auth().signOut();
+
+  const db = firebase.firestore();
+
   function beginTextEditing(item) {
     item.querySelector("span").style.display = "none";
     item.querySelector("input").style.display = "";

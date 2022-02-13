@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="index.css" />
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="vendor/DragDropTouch.js"></script>
-    <script src="script.js"></script>
+    <script src="firebase-init.js"></script>
+    <script src="index.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
-    <div>
-      <h1>Buy</h1>
-      <div class="itemList"></div>
-      <button id="newItemButton">New item</button>
+    <div id="signOutButtonContainer">
+      <button id="signOutButton">Sign out</button>
     </div>
-    <div>
-      <h1>Bought</h1>
-      <div class="itemList"></div>
-    </div>
+    <main>
+      <div>
+        <h1>Buy</h1>
+        <div class="itemList"></div>
+        <button id="newItemButton">New item</button>
+      </div>
+      <div>
+        <h1>Bought</h1>
+        <div class="itemList"></div>
+      </div>
+    </main>
   </body>
 </html>

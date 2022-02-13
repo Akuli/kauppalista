@@ -7,9 +7,20 @@ body {
     margin: 0;
     padding: 0;
     height: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#signOutButtonContainer { text-align: right; }
+#signOutButton { margin: 0.5rem; }
+
+main {
+    flex-grow: 1;
+
     display: flex;
 }
-body > * {
+main > * {
     width: 50%;
     margin: 0.5rem;
     padding: 0.5rem;
