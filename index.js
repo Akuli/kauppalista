@@ -117,10 +117,14 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // FIXME: create doc if not exists
     dbDoc = firebase.firestore().collection("lists").doc(firebase.auth().getUid());
 
-    const data = (await dbDoc.get()).data();
+    let data = (await dbDoc.get()).data();
+    if (data === undefined) {
+      // New user
+      data = {toBuy: [], bought: []};
+      await dbDoc.set(data);
+    }
     const [toBuyList, boughtList] = document.querySelectorAll(".itemList");
 
     for (const text of data.toBuy) {
