@@ -11,7 +11,7 @@
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const ui = new firebaseui.auth.AuthUI(firebase.auth());
-        ui.start("body", {
+        ui.start("main", {
           signInSuccessUrl: window.location.origin + window.location.pathname.replace(/\/[^/]*$/,""),
           signInOptions: [
             {
@@ -22,6 +22,20 @@
         });
       });
     </script>
+    <style>
+      main { margin-bottom: 3rem; }
+      footer { font-family: sans; font-size: 0.7em; text-align: center; }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <main></main>
+    <footer>
+      <p>
+        Don't enter anything too secret into your shopping list.
+        I can see what you entered if I want to look.
+      <p>
+        Please create an issue <a href="https://github.com/Akuli/kauppalista">on GitHub</a>
+        if you find a bug or you want to request a feature.
+    </footer>
+  </body>
 </html>
