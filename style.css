@@ -23,7 +23,6 @@ body > * {
 }
 
 .item {
-    font-size: 1.4rem;
     margin: 0.3rem;
     padding: 0.3rem;
     border-radius: 0.5rem;
@@ -31,7 +30,16 @@ body > * {
     display: flex;
 }
 
-.item > span {
+.item > span, .item > input {
+    font-size: 1.4rem;
+    text-align: center;
     flex-grow: 1;
+}
+
+.item > span {
     user-select: none;
+}
+
+.item > input {
+    width: 0;   /* let flexbox decide */
 }
