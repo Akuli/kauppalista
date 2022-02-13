@@ -87,7 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // FIXME: create doc if not exists
     dbDoc = firebase.firestore().collection("lists").doc(firebase.auth().getUid());
-    window.dbDocForDebugging = dbDoc;  // TODO: remove
 
     const data = (await dbDoc.get()).data();
     const [toBuyList, boughtList] = document.querySelectorAll(".itemList");
