@@ -4,6 +4,12 @@ document.addEventListener("DOMContentLoaded", () => {
     div.classList.add("item");
     div.innerHTML = "<span></span><button>X</button>";
     document.querySelectorAll(".itemList")[+!!alreadyBought].appendChild(div);
+    div.querySelector("button").onclick = () => {
+      const text = div.querySelector("span").textContent;
+      if (confirm(`Delete item "${text}"?`)) {
+        div.remove();
+      }
+    };
     return div;
   }
 
