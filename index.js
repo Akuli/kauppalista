@@ -2,15 +2,47 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("signOutButton").onclick = () => firebase.auth().signOut();
 
   let dbDoc = null;
+  let saveCounter = 0;
+
+  async function showSaveStatus(isError) {
+    if (saveCounter > 1) {
+      statusText.textContent = "Saving... (" + saveCounter + ")";
+      statusText.style.color = "";
+    } else if (saveCounter === 1) {
+      statusText.textContent = "Saving...";
+      statusText.style.color = "";
+    } else {
+      if (isError) {
+        statusText.textContent = "Saving failed!";
+        statusText.style.color = "#cc0000";
+      } else {
+        statusText.textContent = "Saved!";
+        statusText.style.color = "#00cc00";
+      }
+    }
+  }
 
   async function saveToDb() {
-    console.log("Saving begins...");
+    const statusText = document.getElementById("statusText");
+
+    saveCounter++;
+    showSaveStatus(false);
+
     const [toBuyList, boughtList] = document.querySelectorAll(".itemList");
-    await dbDoc.set({
-      toBuy: [...toBuyList.children].map(item => item.querySelector("span").textContent),
-      bought: [...boughtList.children].map(item => item.querySelector("span").textContent),
-    });
-    console.log("Saving done");
+
+    let isError = false;
+    try {
+      await dbDoc.set({
+        toBuy: [...toBuyList.children].map(item => item.querySelector("span").textContent),
+        bought: [...boughtList.children].map(item => item.querySelector("span").textContent),
+      });
+    } catch(e) {
+      console.log(e);
+      isError = true;
+    }
+
+    saveCounter--;
+    showSaveStatus(isError);
   }
 
   function beginTextEditing(item) {
@@ -28,8 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const newText = item.querySelector("input").value.trim();
     if (newText) {
       item.querySelector("span").textContent = newText;
-      saveToDb();
     }
+    saveToDb();
   }
 
   let draggedItem = null;

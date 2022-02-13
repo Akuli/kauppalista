@@ -32,12 +32,14 @@ body {
   position: relative;
 }
 
-#signOutButtonContainer { text-align: right; }
+#topBar { display: flex; }
+#topBar > * { margin: 0.5rem; }
+#statusText { flex-grow: 1; };
 #signOutButton { margin: 0.5rem; }
 
 main {
     flex-grow: 1;
-
+    overflow: auto;
     display: flex;
 }
 main > * {
