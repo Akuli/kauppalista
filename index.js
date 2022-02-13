@@ -118,7 +118,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .remove();
     }
 
-    // Add elements to end.
     // Doesn't cause much unnecessary updating because new items usually go to end anyway
     while (listElement.childElementCount < newStrings.length) {
       listElement.appendChild(createItem());
