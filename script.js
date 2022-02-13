@@ -1,9 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
+  let draggedItem = null;
+
   function addItem(alreadyBought) {
     const div = document.createElement("div");
     div.classList.add("item");
+    div.draggable = true;
     div.innerHTML = '<span></span><input style="display:none;" /><button>X</button>';
-    document.querySelectorAll(".itemList")[+!!alreadyBought].appendChild(div);
 
     // Edit text when clicked
     div.querySelector("span").onclick = () => {
@@ -31,7 +33,24 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     };
 
+    div.addEventListener("dragstart", () => {draggedItem=div; div.classList.add("dragged")});
+    div.addEventListener("dragend", () => {div.classList.remove("dragged")});
+
+    document.querySelectorAll(".itemList")[+!!alreadyBought].appendChild(div);
     return div;
+  }
+
+  for (const itemList of document.querySelectorAll(".itemList")) {
+    itemList.parentElement.ondragover = event => {
+      for (const item of itemList.children) {
+        const r = item.getBoundingClientRect()
+        if ((r.top + r.bottom)/2 > event.y) {
+          item.insertAdjacentElement("beforebegin", draggedItem);
+          return;
+        }
+      }
+      itemList.appendChild(draggedItem);
+    };
   }
 
   addItem(false).querySelector("span").textContent = "gluten-free bread";
