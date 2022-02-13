@@ -10,7 +10,7 @@
       document.addEventListener("DOMContentLoaded", () => {
         const ui = new firebaseui.auth.AuthUI(firebase.auth());
         ui.start("body", {
-          signInSuccessUrl: window.location.origin + "/index.html",
+          signInSuccessUrl: window.location.origin + window.location.pathname.replace(/\/[^/]*$/,""),
           signInOptions: [
             {
               provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,

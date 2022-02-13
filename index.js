@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // https://stackoverflow.com/a/37901056
   firebase.auth().onAuthStateChanged(async(user) => {
     if (!user) {
-      window.location.href = window.location.origin + "/login.html";
+      window.location.href = window.location.origin + window.location.pathname.replace(/\/[^/]*$/,"") + "/login.html";
       return;
     }
 
