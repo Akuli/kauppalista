@@ -37,6 +37,8 @@ body {
 #statusText { flex-grow: 1; };
 #signOutButton { margin: 0.5rem; }
 
+body > small { margin: 0.2rem 0.5rem; }
+
 main {
     flex-grow: 1;
     overflow: auto;
