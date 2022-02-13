@@ -34,8 +34,7 @@ body {
 
 #topBar { display: flex; }
 #topBar > * { margin: 0.5rem; }
-#statusText { flex-grow: 1; };
-#signOutButton { margin: 0.5rem; }
+#statusText { flex-grow: 1; }
 
 h3 {
     margin-top: 0px;
