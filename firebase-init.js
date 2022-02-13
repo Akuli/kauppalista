@@ -3,3 +3,15 @@ firebase.initializeApp({
   authDomain: 'kauppalista-857c5.firebaseapp.com',
   projectId: 'kauppalista-857c5'
 });
+
+/*
+Firestore rules:
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /lists/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}*/

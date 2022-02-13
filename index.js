@@ -1,14 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // https://stackoverflow.com/a/37901056
-  firebase.auth().onAuthStateChanged(user => {
-    if (!user) {
-      window.location.href = window.location.origin + "/login.html";
-    }
-  });
-
   document.getElementById("signOutButton").onclick = () => firebase.auth().signOut();
 
-  const db = firebase.firestore();
+  let dbDoc = null;
 
   function beginTextEditing(item) {
     item.querySelector("span").style.display = "none";
@@ -73,4 +66,32 @@ document.addEventListener("DOMContentLoaded", () => {
       itemList.appendChild(draggedItem);
     };
   }
+
+  // https://stackoverflow.com/a/37901056
+  firebase.auth().onAuthStateChanged(async(user) => {
+    if (!user) {
+      window.location.href = window.location.origin + "/login.html";
+      return;
+    }
+
+    // FIXME: create doc if not exists
+    dbDoc = firebase.firestore().collection("lists").doc(firebase.auth().getUid());
+
+    const data = (await dbDoc.get()).data();
+    const [toBuyList, boughtList] = document.querySelectorAll(".itemList");
+
+    for (const text of data.toBuy) {
+      const item = createItem();
+      item.querySelector("span").textContent = text;
+      toBuyList.appendChild(item);
+    }
+
+    for (const text of data.bought) {
+      const item = createItem();
+      item.querySelector("span").textContent = text;
+      boughtList.appendChild(item);
+    }
+
+    document.getElementById("newItemButton").disabled = false;
+  });
 });
