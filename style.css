@@ -15,28 +15,41 @@ body > * {
     padding: 0.5rem;
     background-color: powderblue;
     border-radius: 1rem;
-}
-
-.itemList {
     display: flex;
     flex-direction: column;
 }
 
-.item {
+.itemList {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.item, #newItemButton {
     margin: 0.3rem;
-    padding: 0.3rem;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
     border-radius: 0.5rem;
     background-color: cornflowerblue;
-    display: flex;
+    color: black;
 }
 
 .item.dragged {
     background-color: blueviolet;
 }
 
-.item > span, .item > input {
+.item {
+    display: flex;
+};
+
+f.item > span, .item > input, #newItemButton {
     font-size: 1.4rem;
     text-align: center;
+}
+
+.item > span, .item > input {
     flex-grow: 1;
 }
 

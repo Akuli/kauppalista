@@ -1,50 +1,70 @@
 document.addEventListener("DOMContentLoaded", () => {
+  function beginTextEditing(item) {
+    item.querySelector("span").style.display = "none";
+    item.querySelector("input").style.display = "";
+    item.querySelector("input").value = item.querySelector("span").textContent;
+    item.querySelector("input").select();
+    window.setTimeout(() => item.querySelector("input").focus(), 1);
+  }
+
   let draggedItem = null;
 
-  function addItem(alreadyBought) {
-    const div = document.createElement("div");
-    div.classList.add("item");
-    div.draggable = true;
-    div.innerHTML = '<span></span><input style="display:none;" /><button>X</button>';
+  function beginDrag(item) {
+    draggedItem = item;
+    item.classList.add("dragged");
+  }
 
-    // Edit text when clicked
-    div.querySelector("span").onclick = () => {
-      div.querySelector("span").style.display = "none";
-      div.querySelector("input").style.display = "";
-      div.querySelector("input").value = div.querySelector("span").textContent;
-      div.querySelector("input").select();
-      div.querySelector("input").focus();
-    };
+  function endDrag(item) {
+    draggedItem = null;
+    item.classList.remove("dragged");
+  }
+
+  function createItem(editNow = false) {
+    const item = document.createElement("div");
+    item.classList.add("item");
+    item.draggable = true;
+    item.innerHTML = '<span></span><input style="display:none;" /><button>X</button>';
+
+    item.querySelector("span").onclick = () => beginTextEditing(item);
 
     // Text editing is done when unfocusing
     function endTextEditing() {
-      div.querySelector("input").style.display = "none";
-      div.querySelector("span").style.display = "";
-      div.querySelector("span").textContent = div.querySelector("input").value;
+      item.querySelector("input").style.display = "none";
+      item.querySelector("span").style.display = "";
+
+      const newText = item.querySelector("input").value.trim();
+      if (newText) {
+        item.querySelector("span").textContent = newText;
+      }
     }
-    div.querySelector("input").addEventListener("focusout", endTextEditing);
-    div.querySelector("input").addEventListener("keyup", e => {if(e.key=="Enter") endTextEditing()});
+    item.querySelector("input").addEventListener("focusout", endTextEditing);
+    item.querySelector("input").addEventListener("keyup", e => {if(e.key==="Enter") endTextEditing()});
 
     // Delete when X button is clicked
-    div.querySelector("button").onclick = () => {
-      const text = div.querySelector("span").textContent;
+    item.querySelector("button").onclick = () => {
+      const text = item.querySelector("span").textContent;
       if (confirm(`Delete item "${text}"?`)) {
-        div.remove();
+        item.remove();
       }
     };
 
-    div.addEventListener("dragstart", () => {draggedItem=div; div.classList.add("dragged")});
-    div.addEventListener("dragend", () => {div.classList.remove("dragged")});
+    item.addEventListener("dragstart", () => beginDrag(item));
+    item.addEventListener("dragend", () => endDrag(item));
 
-    document.querySelectorAll(".itemList")[+!!alreadyBought].appendChild(div);
-    return div;
+    return item;
   }
+
+  document.getElementById("newItemButton").onclick = () => {
+    const item = createItem();
+    beginTextEditing(item);
+    document.querySelector(".itemList").appendChild(item);
+  };
 
   for (const itemList of document.querySelectorAll(".itemList")) {
     itemList.parentElement.ondragover = event => {
       for (const item of itemList.children) {
-        const r = item.getBoundingClientRect()
-        if ((r.top + r.bottom)/2 > event.y) {
+        const r = item.getBoundingClientRect();
+        if ((r.top + r.bottom)/2 > event.clientY) {
           item.insertAdjacentElement("beforebegin", draggedItem);
           return;
         }
@@ -52,9 +72,4 @@ document.addEventListener("DOMContentLoaded", () => {
       itemList.appendChild(draggedItem);
     };
   }
-
-  addItem(false).querySelector("span").textContent = "gluten-free bread";
-  addItem(true).querySelector("span").textContent = "milk 1";
-  addItem(true).querySelector("span").textContent = "milk 2";
-  addItem(true).querySelector("span").textContent = "milk 3";
 });
