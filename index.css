@@ -12,6 +12,26 @@ body {
     flex-direction: column;
 }
 
+/* Based on https://codepen.io/imprakash/pen/GgNMXO */
+#loadingOverlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+}
+#loadingOverlay > div {
+  font-size: 2rem;
+  text-align: center;
+  margin: 70px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 5px;
+  width: 30%;
+  position: relative;
+}
+
 #signOutButtonContainer { text-align: right; }
 #signOutButton { margin: 0.5rem; }
 
