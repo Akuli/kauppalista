@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
-  function updateItemsList(newStrings, listElement) {
+  function updateItemsList(listElement, newStrings) {
     // Remove elements where they first differ
     while (listElement.childElementCount > newStrings.length) {
       [...listElement.children]
@@ -131,8 +131,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function setItems(itemsObject) {
     const [toBuyList, boughtList] = document.querySelectorAll(".itemList");
-    updateItemsList(itemsObject.toBuy, toBuyList);
-    updateItemsList(itemsObject.bought, boughtList);
+    updateItemsList(toBuyList, itemsObject.toBuy);
+    updateItemsList(boughtList, itemsObject.bought);
   }
 
   // https://stackoverflow.com/a/37901056
