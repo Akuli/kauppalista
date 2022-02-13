@@ -110,6 +110,31 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
+  function updateItemsList(newStrings, listElement) {
+    // Remove elements where they first differ
+    while (listElement.childElementCount > newStrings.length) {
+      [...listElement.children]
+        .find((item, i) => newStrings[i] !== item.querySelector("span").textContent)
+        .remove();
+    }
+
+    // Add elements to end.
+    // Doesn't cause much unnecessary updating because new items usually go to end anyway
+    while (listElement.childElementCount < newStrings.length) {
+      listElement.appendChild(createItem());
+    }
+
+    for (let i = 0; i < newStrings.length; i++) {
+      listElement.children[i].querySelector("span").textContent = newStrings[i];
+    }
+  }
+
+  function setItems(itemsObject) {
+    const [toBuyList, boughtList] = document.querySelectorAll(".itemList");
+    updateItemsList(itemsObject.toBuy, toBuyList);
+    updateItemsList(itemsObject.bought, boughtList);
+  }
+
   // https://stackoverflow.com/a/37901056
   firebase.auth().onAuthStateChanged(async(user) => {
     if (!user) {
@@ -125,19 +150,9 @@ document.addEventListener("DOMContentLoaded", () => {
       data = {toBuy: [], bought: []};
       await dbDoc.set(data);
     }
-    const [toBuyList, boughtList] = document.querySelectorAll(".itemList");
 
-    for (const text of data.toBuy) {
-      const item = createItem();
-      item.querySelector("span").textContent = text;
-      toBuyList.appendChild(item);
-    }
-
-    for (const text of data.bought) {
-      const item = createItem();
-      item.querySelector("span").textContent = text;
-      boughtList.appendChild(item);
-    }
+    setItems(data);
+    dbDoc.onSnapshot(doc => setItems(doc.data()));
 
     document.getElementById("newItemButton").disabled = false;
     document.getElementById("loadingOverlay").style.display = 'none';
