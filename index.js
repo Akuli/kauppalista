@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .remove();
     }
 
-    // Doesn't cause much unnecessary updating because new items usually go to end anyway
+    // Always adding to end is good because new items usually go to end
     while (listElement.childElementCount < newStrings.length) {
       listElement.appendChild(createItem());
     }
