@@ -136,8 +136,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // https://stackoverflow.com/a/37901056
   firebase.auth().onAuthStateChanged(async(user) => {
+    console.log("auth changed", user.email, user.emailVerified);
     if (!user) {
       window.location.href = window.location.origin + window.location.pathname.replace(/\/[^/]*$/,"") + "/login.html";
+      return;
+    }
+
+    // TODO: remove 1
+    if (!user.emailVerified || 1) {
       return;
     }
 
