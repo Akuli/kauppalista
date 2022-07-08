@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let dbDoc = null;
   let saveCounter = 0;
 
-  async function showSaveStatus(isError) {
+  function showSaveStatus(isError) {
     if (saveCounter > 1) {
       statusText.textContent = "Saving... (" + saveCounter + ")";
       statusText.style.color = "";
