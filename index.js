@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let draggedItem = null;
 
-  function createItem(editNow = false) {
+  function createItem() {
     const item = document.createElement("div");
     item.classList.add("item");
     item.draggable = true;
@@ -91,11 +91,24 @@ document.addEventListener("DOMContentLoaded", () => {
     return item;
   }
 
-  document.getElementById("newItemButton").onclick = () => {
+  function createItemAndStartEditing() {
     const item = createItem();
     beginTextEditing(item);
     document.querySelector(".itemList").appendChild(item);
-  };
+  }
+
+  document.getElementById("newItemButton").onclick = createItemAndStartEditing;
+
+  // there seems to be no good way to detect if user has keyboard
+  // https://stackoverflow.com/a/18880989
+  if (!("ontouchstart" in document.documentElement)) {
+    document.getElementById("newItemButton").textContent += " (N)";
+    document.addEventListener("keydown", event => {
+      if (document.activeElement === document.body && event.key.toLowerCase() === 'n') {
+        createItemAndStartEditing();
+      }
+    });
+  }
 
   for (const itemList of document.querySelectorAll(".itemList")) {
     itemList.parentElement.ondragover = event => {
