@@ -60,6 +60,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const newText = item.querySelector("input").value.trim();
     if (newText) {
       item.querySelector("span").textContent = newText;
+    } else {
+      // If there is old text, keep it.
+      // If not, delete item, because user created new item and never wrote text to it.
+      if (!item.querySelector("span").textContent) {
+        item.remove();
+      }
     }
     saveToDb();
   }
