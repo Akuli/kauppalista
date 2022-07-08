@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let saveCounter = 0;
 
   function showSaveStatus(isError) {
+    const statusText = document.getElementById("statusText");
+
     if (saveCounter > 1) {
       statusText.textContent = "Saving... (" + saveCounter + ")";
       statusText.style.color = "";
@@ -23,8 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function saveToDb() {
-    const statusText = document.getElementById("statusText");
-
     saveCounter++;
     showSaveStatus(false);
 
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     item.querySelector("span").onclick = () => beginTextEditing(item);
     item.querySelector("input").addEventListener("focusout", () => endTextEditing(item));
-    item.querySelector("input").addEventListener("keyup", e => {if(e.key==="Enter") event.target.blur()});
+    item.querySelector("input").addEventListener("keyup", e => {if(e.key==="Enter") e.target.blur()});
 
     // Delete when X button is clicked
     item.querySelector("button").onclick = () => {
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     item.addEventListener("dragstart", () => { draggedItem = item; item.classList.add("dragged"); });
-    item.addEventListener("dragend", () => { item.classList.remove("dragged"); saveToDb(); });
+    item.addEventListener("dragend", () => { draggedItem = null; item.classList.remove("dragged"); saveToDb(); });
 
     return item;
   }
@@ -118,6 +118,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   for (const itemList of document.querySelectorAll(".itemList")) {
     itemList.parentElement.ondragover = event => {
+      if (draggedItem === null) {
+        // Happens if user drags something completely unrelated into this app
+        return;
+      }
+
       for (const item of itemList.children) {
         const r = item.getBoundingClientRect();
         if ((r.top + r.bottom)/2 > event.clientY) {
