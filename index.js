@@ -28,7 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
     saveCounter++;
     showSaveStatus(false);
 
-    const [toBuyList, boughtList] = document.querySelectorAll(".itemList");
+    const toBuyList = document.getElementById("itemListBuy");
+    const boughtList = document.getElementById("itemListBought");
 
     let isError = false;
     try {
@@ -60,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const newText = item.querySelector("input").value.trim();
     if (newText) {
       item.querySelector("span").textContent = newText;
+      sortBoughtList();
     } else {
       // If there is old text, keep it.
       // If not, delete item, because user created new item and never wrote text to it.
@@ -92,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     item.addEventListener("dragstart", () => { draggedItem = item; item.classList.add("dragged"); });
-    item.addEventListener("dragend", () => { draggedItem = null; item.classList.remove("dragged"); saveToDb(); });
+    item.addEventListener("dragend", () => { draggedItem = null; item.classList.remove("dragged"); sortBoughtList(); saveToDb(); });
 
     return item;
   }
@@ -100,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function createItemAndStartEditing() {
     const item = createItem();
     beginTextEditing(item);
-    document.querySelector(".itemList").appendChild(item);
+    document.getElementById("itemListBuy").appendChild(item);
   }
 
   document.getElementById("newItemButton").onclick = createItemAndStartEditing;
@@ -134,6 +136,17 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
+  function sortBoughtList() {
+    // https://stackoverflow.com/a/50127768
+    const boughtList = document.getElementById("itemListBought");
+    const items = [...boughtList.children];
+    const sortKey = item => item.querySelector("span").textContent.toLowerCase();
+    items.sort((a,b) => (sortKey(a)>sortKey(b)) ? 1 : -1);
+    for (const item of items) {
+      boughtList.appendChild(item);
+    }
+  }
+
   function updateItemsList(listElement, newStrings) {
     // Remove elements where they first differ
     while (listElement.childElementCount > newStrings.length) {
@@ -143,6 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Always adding to end is good because new items usually go to end
+    // TODO: we can do better when in the bought list where the items are sorted
     while (listElement.childElementCount < newStrings.length) {
       listElement.appendChild(createItem());
     }
@@ -153,9 +167,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function setItems(itemsObject) {
-    const [toBuyList, boughtList] = document.querySelectorAll(".itemList");
-    updateItemsList(toBuyList, itemsObject.toBuy);
-    updateItemsList(boughtList, itemsObject.bought);
+    updateItemsList(document.getElementById("itemListBuy"), itemsObject.toBuy);
+    updateItemsList(document.getElementById("itemListBought"), itemsObject.bought);
+    sortBoughtList();
   }
 
   // https://stackoverflow.com/a/37901056
