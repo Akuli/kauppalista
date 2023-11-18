@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const item = document.createElement("div");
     item.classList.add("item");
     item.draggable = true;
-    item.innerHTML = '<span></span><input style="display:none;" /><button>X</button>';
+    item.innerHTML = '<span></span><input style="display:none;" /><button>&nbsp;X&nbsp;</button>';
 
     item.querySelector("span").onclick = () => beginTextEditing(item);
     item.querySelector("input").addEventListener("focusout", () => endTextEditing(item));

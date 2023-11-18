@@ -110,6 +110,7 @@ main > * {
 
 .item > span {
     user-select: none;
+    overflow-wrap: anywhere;
 }
 
 .item > input {
@@ -118,7 +119,6 @@ main > * {
 
 .item > button {
     font-size: 0.5em;
-    width: 1rem;
     height: 1rem;
     padding: 0em;
 }
