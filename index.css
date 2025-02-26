@@ -122,3 +122,7 @@ main > * {
     height: 1rem;
     padding: 0em;
 }
+
+#newItemButton {
+    user-select: none;
+}
