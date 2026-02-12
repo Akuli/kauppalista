@@ -66,7 +66,7 @@ main > * {
 .item {
     margin: 0.2rem;
     padding: 0.2rem;
-    border-radius: 1vh;
+    border-radius: min(1vh, 1vw);
     background-color: #333;
     color: white;
 }
@@ -80,7 +80,7 @@ main > * {
 }
 
 .item > span {
-    font-size: 20vh;
+    font-size: min(20vh, 20vw);
     text-align: center;
     flex-grow: 1;
 }
