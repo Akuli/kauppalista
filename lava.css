@@ -1,0 +1,96 @@
+html {
+    height: 100%;
+    font-family: sans;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+/* Based on https://codepen.io/imprakash/pen/GgNMXO */
+#loadingOverlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+}
+#loadingOverlay > div {
+  font-size: 2rem;
+  text-align: center;
+  margin: 70px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 5px;
+  width: 30%;
+  position: relative;
+}
+
+#statusText { flex-grow: 1; }
+
+#signOutButton {
+    width: fit-content;
+}
+
+h3 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    user-select: none;
+}
+
+main {
+    flex-grow: 1;
+    overflow: auto;
+    display: flex;
+}
+main > * {
+    width: 100%;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+}
+
+.itemList {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.item {
+    margin: 0.2rem;
+    padding: 0.2rem;
+    border-radius: 1vh;
+    background-color: #333;
+    color: white;
+}
+
+.item.dragged {
+    background-color: blueviolet;
+}
+
+.item {
+    display: flex;
+}
+
+.item > span {
+    font-size: 20vh;
+    text-align: center;
+    font-style: bold;
+    flex-grow: 1;
+}
+
+.item > span {
+    user-select: none;
+    overflow-wrap: anywhere;
+}
+
+.item > button {
+    display: none;
+}

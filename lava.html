@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kauppalista</title>
+    <link rel="stylesheet" href="lava.css" />
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="vendor/DragDropTouch.js"></script>
+    <script src="firebase-init.js"></script>
+    <script src="index.js"></script>
+  </head>
+  <body>
+    <div id="topBar">
+      <span id="statusText"></span>
+    </div>
+
+    <div id="loadingOverlay">
+    	<div>
+    	   Loading...
+    	</div>
+    </div>
+
+    <main>
+      <div>
+        <div class="itemList" id="itemListBuy"></div>
+      </div>
+      <div style="display:none">
+        <h3>Bought</h3>
+        <div class="itemList" id="itemListBought"></div>
+        <button id="newItemButton" disabled>New item</button>
+      </div>
+    </main>
+    <button id="signOutButton">Sign out</button>
+
+  </body>
+</html>
