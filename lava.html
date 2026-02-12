@@ -10,8 +10,22 @@
     <script src="vendor/DragDropTouch.js"></script>
     <script src="firebase-init.js"></script>
     <script src="index.js"></script>
+    <script>
+      let wakeLock = null;
+      async function keepAwake() {
+        try {
+          wakeLock = await navigator.wakeLock.request("screen");
+          console.log("Wake lock active");
+          wakeLock.addEventListener("release", () => {
+            console.log("Wake lock released");
+          });
+        } catch (err) {
+          console.error(`${err.name}, ${err.message}`);
+        }
+      }
+    </script>
   </head>
-  <body>
+  <body onclick=keepAwake()>
     <div id="topBar">
       <span id="statusText"></span>
     </div>

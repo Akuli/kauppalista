@@ -82,7 +82,6 @@ main > * {
 .item > span {
     font-size: 20vh;
     text-align: center;
-    font-style: bold;
     flex-grow: 1;
 }
 
