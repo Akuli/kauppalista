@@ -80,9 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
     item.draggable = true;
     item.innerHTML = '<span></span><input style="display:none;" /><button>&nbsp;X&nbsp;</button>';
 
-    if (!/lava(\.html?)$/.test(window.location.pathname)) {
-      item.querySelector("span").onclick = () => beginTextEditing(item);
-    }
+    item.querySelector("span").onclick = () => beginTextEditing(item);
     item.querySelector("input").addEventListener("focusout", () => endTextEditing(item));
     item.querySelector("input").addEventListener("keyup", e => {if(e.key==="Enter") e.target.blur()});
 
